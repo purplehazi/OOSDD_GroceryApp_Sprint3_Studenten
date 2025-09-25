@@ -71,7 +71,7 @@ namespace Grocery.App.ViewModels
         }
 
         [RelayCommand]
-        public async Task ShareGroceryList(CancellationToken cancellationToken)
+        public async Task ShareGroceryList(CancellationToken cancellationToken) //test
         {
             if (GroceryList == null || MyGroceryListItems == null) return;
             string jsonString = JsonSerializer.Serialize(MyGroceryListItems);
@@ -83,6 +83,21 @@ namespace Grocery.App.ViewModels
             catch (Exception ex)
             {
                 await Toast.Make($"Opslaan mislukt: {ex.Message}").Show(cancellationToken);
+            }
+        }
+
+        [RelayCommand]
+        public void SearchProducts(string searchTerm) // made the searchbar work
+        {
+            if (string.IsNullOrEmpty(searchTerm)) return;
+            AvailableProducts.Clear();
+            foreach (Product p in _productService.GetAll())
+            {
+                if (MyGroceryListItems.FirstOrDefault(g => g.ProductId == p.Id) == null && p.Stock > 0 && p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                    AvailableProducts.Add(p);
+                {
+                    AvailableProducts.Add(p);
+                }
             }
         }
     }
