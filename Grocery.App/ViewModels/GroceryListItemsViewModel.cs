@@ -85,20 +85,5 @@ namespace Grocery.App.ViewModels
                 await Toast.Make($"Opslaan mislukt: {ex.Message}").Show(cancellationToken);
             }
         }
-
-        [RelayCommand]
-        public void SearchProducts(string searchTerm) // made the searchbar work
-        {
-            if (string.IsNullOrEmpty(searchTerm)) return;
-            AvailableProducts.Clear();
-            foreach (Product p in _productService.GetAll())
-            {
-                if (MyGroceryListItems.FirstOrDefault(g => g.ProductId == p.Id) == null && p.Stock > 0 && p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-                    AvailableProducts.Add(p);
-                {
-                    AvailableProducts.Add(p);
-                }
-            }
-        }
     }
 }
