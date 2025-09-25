@@ -71,7 +71,7 @@ namespace Grocery.App.ViewModels
         }
 
         [RelayCommand]
-        public async Task ShareGroceryList(CancellationToken cancellationToken)
+        public async Task ShareGroceryList(CancellationToken cancellationToken) //test
         {
             if (GroceryList == null || MyGroceryListItems == null) return;
             string jsonString = JsonSerializer.Serialize(MyGroceryListItems);
