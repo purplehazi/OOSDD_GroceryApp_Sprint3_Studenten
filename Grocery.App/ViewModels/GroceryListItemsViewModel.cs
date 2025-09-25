@@ -85,6 +85,9 @@ namespace Grocery.App.ViewModels
                 await Toast.Make($"Opslaan mislukt: {ex.Message}").Show(cancellationToken);
             }
         }
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
     }
 }
