@@ -17,8 +17,8 @@ namespace Grocery.Core.Models
         {
             GroceryListId = groceryListId;
             ProductId = productId;
-            Amount = amount;  // Hoofdletter A! Dit wordt automatisch gegenereerd
-            IsPurchased = false;  // Hoofdletter I!
+            Amount = amount;
+            IsPurchased = false;
         }
 
         public Product Product { get; set; } = new(0, "None", 0);
