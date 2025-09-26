@@ -1,4 +1,4 @@
--------
+
 Bij het testplan (elke UC is aangepast):
     - UC7, 8, 9 toegevoegd. 
     - UC 1 t/m 6 aangepast
@@ -11,7 +11,7 @@ Bij het testplan (elke UC is aangepast):
     ^ testsoorten zijn ook aangepast van 1 t/m 9 + onderbouwd
         ^+ Bewuste keuze voor testsoorten gemaakt
     - Bij 5.2.1 wist ik niet precies wat we moesten doen, omdat ik niet snapte wat er met team werd bedoelt, dus dat is verzonnen.
--------
+
 Bij het testontwerp:
     - Testcase is concreet en reproduceerbaar.
     - Testcase bevat overal testdoelen > aka verwachte uitkomsten
@@ -23,7 +23,7 @@ Bij het testontwerp:
     - Testontwerp sluit aan bij het testplan
     - Testscenario's zijn gekoppeld aan de use cases en testdoelen
         ^+ Volledig gestructureerd
--------
+
 bij het testrapportage:
     - Testcases zijn correct uitgevoerd
         ^testresultaten zijn ook vastgelegd met bevinding erbij
