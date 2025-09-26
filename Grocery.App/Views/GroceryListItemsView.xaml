@@ -56,7 +56,7 @@
             <StackLayout>
                  <SearchBar Placeholder="Zoeken naar producten..."
                             SearchCommand="{Binding SearchProductsCommand}"
-                            SearchCommandParameter="{Binding Source=RelativeSource Self}, Path=Text}"/>
+                            SearchCommandParameter="{Binding Source=RelativeSource Self, Path=Text}"/>
                             <!-- added a searchbar -->
                 <CollectionView ItemsSource="{Binding AvailableProducts}" Margin="5" WidthRequest="300" HorizontalOptions="Start"
                     SelectionMode="Single"
