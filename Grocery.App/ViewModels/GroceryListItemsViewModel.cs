@@ -85,5 +85,80 @@ namespace Grocery.App.ViewModels
                 await Toast.Make($"Opslaan mislukt: {ex.Message}").Show(cancellationToken);
             }
         }
+
+        [RelayCommand]
+        public void SearchProducts(string searchTerm) // made the searchbar work
+        {
+            if (string.IsNullOrEmpty(searchTerm)) return;
+            AvailableProducts.Clear();
+            foreach (Product p in _productService.GetAll())
+            {
+                if (MyGroceryListItems.FirstOrDefault(g => g.ProductId == p.Id) == null && p.Stock > 0 && p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                    AvailableProducts.Add(p);
+                {
+                    AvailableProducts.Add(p);
+                }
+            }
+        }
+
+        [RelayCommand]
+        public void IncrementAmount(GroceryListItem item)
+        {
+            if (item == null) return;
+
+            var product = _productService.GetAll().FirstOrDefault(p => p.Id == item.ProductId);
+            if (product != null && product.Stock > 0)
+            {
+                item.Amount++;
+                product.Stock--;
+                _productService.Update(product);
+                _groceryListItemsService.Update(item);
+            }
+            else
+            {
+                MyMessage = "Product is niet meer op voorraad!";
+            }
+        }
+
+        [RelayCommand]
+        public void DecrementAmount(GroceryListItem item)
+        {
+            if (item == null) return;
+
+            if (item.Amount > 1)
+            {
+                item.Amount--;
+
+                var product = _productService.GetAll().FirstOrDefault(p => p.Id == item.ProductId);
+                if (product != null)
+                {
+                    product.Stock++;
+                    _productService.Update(product);
+                    _groceryListItemsService.Update(item);
+                }
+            }
+            else if (item.Amount == 1)
+            {
+                var product = _productService.GetAll().FirstOrDefault(p => p.Id == item.ProductId);
+                if (product != null)
+                {
+                    product.Stock++;
+                    _productService.Update(product);
+                }
+
+                MyGroceryListItems.Remove(item);
+                _groceryListItemsService.Delete(item);
+                GetAvailableProducts();
+            }
+        }
+
+        [RelayCommand]
+        public void TogglePurchased(GroceryListItem item)
+        {
+            if (item == null) return;
+
+            item.IsPurchased = !item.IsPurchased;
+            _groceryListItemsService.Update(item);
+        }
     }
 }
