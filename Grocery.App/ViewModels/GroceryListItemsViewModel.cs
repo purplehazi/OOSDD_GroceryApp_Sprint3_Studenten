@@ -100,5 +100,65 @@ namespace Grocery.App.ViewModels
                 }
             }
         }
+
+        [RelayCommand]
+        public void IncrementAmount(GroceryListItem item)
+        {
+            if (item == null) return;
+
+            var product = _productService.GetAll().FirstOrDefault(p => p.Id == item.ProductId);
+            if (product != null && product.Stock > 0)
+            {
+                item.Amount++;
+                product.Stock--;
+                _productService.Update(product);
+                _groceryListItemsService.Update(item);
+            }
+            else
+            {
+                MyMessage = "Product is niet meer op voorraad!";
+            }
+        }
+
+        [RelayCommand]
+        public void DecrementAmount(GroceryListItem item)
+        {
+            if (item == null) return;
+
+            if (item.Amount > 1)
+            {
+                item.Amount--;
+
+                var product = _productService.GetAll().FirstOrDefault(p => p.Id == item.ProductId);
+                if (product != null)
+                {
+                    product.Stock++;
+                    _productService.Update(product);
+                    _groceryListItemsService.Update(item);
+                }
+            }
+            else if (item.Amount == 1)
+            {
+                var product = _productService.GetAll().FirstOrDefault(p => p.Id == item.ProductId);
+                if (product != null)
+                {
+                    product.Stock++;
+                    _productService.Update(product);
+                }
+
+                MyGroceryListItems.Remove(item);
+                _groceryListItemsService.Delete(item);
+                GetAvailableProducts();
+            }
+        }
+
+        [RelayCommand]
+        public void TogglePurchased(GroceryListItem item)
+        {
+            if (item == null) return;
+
+            item.IsPurchased = !item.IsPurchased;
+            _groceryListItemsService.Update(item);
+        }
     }
 }
