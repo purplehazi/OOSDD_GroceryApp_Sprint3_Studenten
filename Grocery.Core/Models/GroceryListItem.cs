@@ -10,6 +10,7 @@
             GroceryListId = groceryListId;
             ProductId = productId;
             Amount = amount;
+            IsPurchased = false;
         }
 
         public Product Product { get; set; } = new(0, "None", 0);
