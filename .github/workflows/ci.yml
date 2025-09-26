@@ -1,0 +1,32 @@
+name: .NET Build & Test (libs)
+
+on:
+  push:
+    branches: [ main, develop, feature/** ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      # Bouw ALLEEN libraries (geen MAUI-app)
+      - name: Build Grocery.Core
+        run: dotnet build ./Grocery.Core/Grocery.Core.csproj -c Release --no-restore
+
+      - name: Build Grocery.Core.Data
+        run: dotnet build ./Grocery.Core.Data/Grocery.Core.Data.csproj -c Release --no-restore
+
+      # Tests (haal weg als je geen TestCore hebt)
+      - name: Run tests
+        run: dotnet test ./TestCore/TestCore.csproj -c Release --no-build --verbosity normal
